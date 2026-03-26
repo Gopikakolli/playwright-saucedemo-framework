@@ -5,7 +5,7 @@ import { InventoryPage } from '../page-objects/InventoryPage'
 test('user can login and add product to cart', async ({ page }) => {
     const loginPage = new LoginPage(page)
     const inventoryPage = new InventoryPage(page)
-     
+
      await loginPage.navigate()
      await loginPage.login('standard_user', 'secret_sauce')
 
