@@ -1,14 +1,17 @@
-import{ test, expect} from '@playwright/test'
-import { LoginPage } from '../Page-Objects/LoginPage'
-import { InventoryPage } from '../Page-Objects/inventoryPage'
+import {test, expect} from '@playwright/test'
+import { PageManager } from '../Utils/PageManager.ts'
 
+test.beforeEach(async ({ page }) => {
+  const pm = new PageManager(page)
+  const loginPage = pm.onLoginPage()
 
-test('login and add product to cart', async({page}) => {
-    const loginPage = new LoginPage(page)
-    const inventoryPage = new InventoryPage(page)
+  await loginPage.navigate()
+  await loginPage.login('standard_user', 'secret_sauce')
+});
 
-    await loginPage.navigate()
-    await loginPage.login('standard_user', 'secret_sauce')
+test('add product to cart', async({page}) =>{
+    const pm = new PageManager(page)
+    const inventoryPage = pm.onInventoryPage()
 
     await inventoryPage.addBackpackToCart()
     await inventoryPage.gotoCart()
